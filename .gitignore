@@ -1,0 +1,30 @@
+# Compiled output
+
+*.exe
+*.out
+*.o
+
+# Mac / Linux
+
+*.dSYM
+
+# Windows
+
+*.obj
+
+# Temporary files
+
+*.log
+*.tmp
+
+# Editor files
+
+.vscode/
+.idea/
+
+# OS files
+
+.DS_Store
+Thumbs.db
+# Node modules
+node_modules/
