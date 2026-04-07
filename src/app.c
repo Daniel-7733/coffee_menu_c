@@ -7,30 +7,23 @@
 #include "input.h"
 #include "price.h"
 
-/**
- * @brief Runs the main application workflow.
- *
- * Displays menu, handles user input, and calculates total bill.
- *
- * @return 0 on success, 1 on failure
- */
 int run_app(void) {
-    Coffee menu[] = {
-        {1, "Cappuccino", 550, '$'},
-        {2, "Caffe Latte", 475, '$'},
-        {3, "Cortado", 425, '$'},
-        {4, "Cold Brew", 500, '$'},
-        {5, "Caffe Nero", 350, '$'},
-        {6, "Caturra", 625, '$'},
-        {7, "Caffe Mocha", 525, '$'},
-        {8, "Cafe au Lait", 450, '$'},
-        {9, "Catuai", 600, '$'},
-        {10, "Cafe de Olla", 400, '$'}
-    };
-
-    int menu_size = (int)(sizeof(menu) / sizeof(menu[0]));
+    int menu_size = 3;
     int max_orders = 10;
     int total_cents = 0;
+
+    Coffee menu[3];
+
+    if (!init_coffee(&menu[0], 1, "Cappuccino", 550, '$') ||
+        !init_coffee(&menu[1], 2, "Caffe Latte", 475, '$') ||
+        !init_coffee(&menu[2], 3, "Cortado", 425, '$')) {
+        printf("Memory allocation failed.\n");
+
+        for (int i = 0; i < menu_size; i++) {
+            free_coffee(&menu[i]);
+        }
+        return 1;
+    }
 
     show_menu(menu, menu_size);
 
@@ -43,6 +36,10 @@ int run_app(void) {
     int *user_choices = malloc((size_t)total_orders * sizeof *user_choices);
     if (user_choices == NULL) {
         fprintf(stderr, "Memory allocation failed.\n");
+
+        for (int i = 0; i < menu_size; i++) {
+            free_coffee(&menu[i]);
+        }
         return 1;
     }
 
@@ -72,5 +69,26 @@ int run_app(void) {
     printf("-----------------------\n");
 
     free(user_choices);
+
+    for (int i = 0; i < menu_size; i++) {
+        free_coffee(&menu[i]);
+    }
+
     return 0;
 }
+
+
+    // Coffee menu[] = {
+    //     {1, "Cappuccino", 550, '$'},
+    //     {2, "Caffe Latte", 475, '$'},
+    //     {3, "Cortado", 425, '$'},
+    //     {4, "Cold Brew", 500, '$'},
+    //     {5, "Caffe Nero", 350, '$'},
+    //     {6, "Caturra", 625, '$'},
+    //     {7, "Caffe Mocha", 525, '$'},
+    //     {8, "Cafe au Lait", 450, '$'},
+    //     {9, "Catuai", 600, '$'},
+    //     {10, "Cafe de Olla", 400, '$'}
+    // };
+    // int count = 2;
+    // Coffee* menu = malloc(count * sizeof(Coffee));
