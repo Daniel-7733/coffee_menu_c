@@ -39,7 +39,8 @@ This project focuses on building a strong foundation in C programming, including
 Compile:
 
 ```bash
-gcc src/main.c -o coffee
+gcc src/main.c -o coffee      # This command is for compiling single file in C
+gcc src/* -Iinclude -o coffee # This command is for compiling multiple file in C (.c & .h)
 ```
 
 Run:

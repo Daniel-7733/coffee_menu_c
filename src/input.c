@@ -33,6 +33,7 @@ int read_int_in_range(const char *prompt, int min, int max) {
 
         if (endptr == buffer) {
             printf("Invalid input. Please enter a number.\n");
+            clear_buffer();
             continue;
         }
 
@@ -42,11 +43,13 @@ int read_int_in_range(const char *prompt, int min, int max) {
 
         if (*endptr != '\n' && *endptr != '\0') {
             printf("Invalid input. Please enter only a number.\n");
+            clear_buffer();
             continue;
         }
 
         if (value < min || value > max) {
             printf("Please enter a number between %d and %d.\n", min, max);
+            clear_buffer();
             continue;
         }
 
@@ -54,6 +57,16 @@ int read_int_in_range(const char *prompt, int min, int max) {
     }
 }
 
+
+/**
+ *@brief Clear the buffer and the rest of charater that has been added by user
+ * let say buffer size is 100 and user add 300 character. This function will remove 
+ * the rest of added input until it reaches "EOF".
+ */
+void clear_buffer() {
+    int ch;
+    while ((ch = getchar()) != '\n' && ch != EOF); // clear buffer
+}
 
 void remove_newline(char *text) {
     size_t len = strlen(text);

@@ -7,5 +7,6 @@
 int read_int_in_range(const char *prompt, int min, int max);
 char *ask_user_coffee_name(const char *prompt);
 void remove_newline(char *text);
+void clear_buffer();
 
 #endif
